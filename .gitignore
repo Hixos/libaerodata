@@ -1,0 +1,5 @@
+build_w64_debug/
+build_w64_release/
+subprojects/Catch2*/
+subprojects/zlib*/
+subprojects/packagecache/
