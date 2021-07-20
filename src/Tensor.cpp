@@ -1,6 +1,7 @@
 #include "Tensor.h"
 
 #include <cassert>
+#include <cstring>
 #include <stdexcept>
 
 Tensor::Tensor(vector<size_t> dimensions) : dimensions(dimensions)

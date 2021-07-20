@@ -220,7 +220,7 @@ inline vector<T> multiInterpN(const vector<Tensor>& v,
 
     vector<T> val_out;
     val_out.reserve(v.size());
-    for (int i = 0; i < vals.size(); ++i)
+    for (size_t i = 0; i < vals.size(); ++i)
     {
         val_out.push_back(vals[i][0]);
     }

@@ -22,7 +22,7 @@ double f(vd data, int k)
     vd phase{45, 50, 175, 247};
 
     double out = 0;
-    for (int i = 0; i < data.size(); ++i)
+    for (size_t i = 0; i < data.size(); ++i)
     {
         out += amp[i] *
                sin(freq[i] * M_PI / 180 * data[i] + phase[i] * M_PI / 180);
