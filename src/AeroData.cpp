@@ -4,50 +4,53 @@
 
 #include <cassert>
 #include <cstdio>
+#include <cstring>
 
 #include "Utils.h"
 
 AeroData::AeroData(const vector<vector<double>>& state_arrays,
-                   const vector<Tensor>& coefficients)
-    : coeff_data(coefficients), state_arrays(state_arrays)
+                   const vector<Tensor>& aerodata_tensors)
+    : aerodata_tensors(aerodata_tensors), state_arrays(state_arrays)
 {
 }
 
-vector<double> AeroData::getCoefficients(const vector<double>& state,
-                                         Interpolation interp) const
+vector<double> AeroData::getAeroData(const vector<double>& state,
+                                     Interpolation interp) const
 {
     assert(state.size() == state_arrays.size());
 
-    // TODO: Add other interpolation methods
-    (void)interp;
-    vector<size_t> indices;
-    indices.reserve(state_arrays.size());
-
-    for (size_t i = 0; i < state.size(); i++)
-    {
-        indices.push_back(nearestBinarySearch(state_arrays[i], state[i]));
-    }
-
-    // All coefficient tensors are the same size
-    size_t arr_index = coeff_data[0].getArrayIndex(indices);
-
-    vector<double> coeffs;
-    coeffs.reserve(coeff_data.size());
-
-    for (const Tensor& t : coeff_data)
-    {
-        coeffs.push_back(t(arr_index));
-    }
+    vector<double> coeffs(aerodata_tensors.size(), 0);
+    getAeroData(state.data(), state.size(), coeffs.data(), coeffs.size(),
+                interp);
 
     return coeffs;
 }
 
-void AeroData::getCoefficients(const double* state, size_t state_size,
-                               double* coeffs, size_t coeff_size,
-                               Interpolation interp) const
+vector<double> AeroData::getAeroData(const vector<size_t>& index) const
+{
+    vector<double> aerodata;
+    aerodata.reserve(aerodata_tensors.size());
+
+    for (size_t i = 0; i < aerodata_tensors.size(); ++i)
+    {
+        aerodata.push_back(aerodata_tensors[i](index));
+    }
+
+    return aerodata;
+}
+
+vector<double> AeroData::getAeroData(size_t flat_index) const
+{
+    vector<size_t> index = aerodata_tensors[0].getIndex(flat_index);
+    return getAeroData(index);
+}
+
+void AeroData::getAeroData(const double* state, size_t state_size,
+                           double* aerodata, size_t aerodata_size,
+                           Interpolation interp) const
 {
     assert(state_size == state_arrays.size());
-    assert(coeff_size == coeff_data.size());
+    assert(aerodata_size == aerodata_tensors.size());
 
     if (interp == Interpolation::NEAREST)
     {
@@ -60,18 +63,37 @@ void AeroData::getCoefficients(const double* state, size_t state_size,
         }
 
         // All coefficient tensors are the same size
-        size_t arr_index = coeff_data[0].getArrayIndex(indices);
+        size_t arr_index = aerodata_tensors[0].getArrayIndex(indices);
 
-        for (size_t i = 0; i < coeff_size; ++i)
+        for (size_t i = 0; i < aerodata_size; ++i)
         {
-            coeffs[i] = coeff_data[i](arr_index);
+            aerodata[i] = aerodata_tensors[i](arr_index);
         }
     }
     else
     {
         vector<double> v_state(state, state + state_size);
         vector<double> v_coeffs =
-            multiInterpN(coeff_data, state_arrays, v_state);
-        memcpy(coeffs, v_coeffs.data(), coeff_size * sizeof(double));
+            multiInterpN(aerodata_tensors, state_arrays, v_state);
+        memcpy(aerodata, v_coeffs.data(), aerodata_size * sizeof(double));
     }
+}
+
+vector<double> AeroData::getState(const vector<size_t>& index) const
+{
+    vector<double> state;
+    state.reserve(state_arrays.size());
+
+    for (size_t i = 0; i < state_arrays.size(); ++i)
+    {
+        state.push_back(state_arrays[i][index[i]]);
+    }
+    
+    return state;
+}
+
+vector<double> AeroData::getState(size_t flat_index) const
+{
+    vector<size_t> index = aerodata_tensors[0].getIndex(flat_index);
+    return getState(index);
 }

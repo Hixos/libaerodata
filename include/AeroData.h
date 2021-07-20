@@ -18,17 +18,27 @@ public:
     };
 
     AeroData(const vector<vector<double>>& state_arrays,
-             const vector<Tensor>& coefficients);
+             const vector<Tensor>& aerodata_tensors);
 
-    vector<double> getCoefficients(
+    vector<double> getAeroData(
         const vector<double>& state,
         Interpolation interp = Interpolation::NEAREST) const;
 
-    void getCoefficients(const double* state, size_t state_size, double* coeffs,
-                         size_t coeff_size,
-                         Interpolation interp = Interpolation::NEAREST) const;
+    vector<double> getAeroData(const vector<size_t>& index) const;
+    vector<double> getAeroData(size_t flat_index) const;
+
+    void getAeroData(const double* state, size_t state_size, double* coeffs,
+                     size_t coeff_size,
+                     Interpolation interp = Interpolation::NEAREST) const;
+
+    const vector<vector<double>>& getStates() { return state_arrays; };
+
+    vector<double> getState(const vector<size_t>& index) const;
+    vector<double> getState(size_t flat_index) const;
+
+    size_t getTensorFlatSize() { return aerodata_tensors[0].getDataSize(); }
 
 private:
-    vector<Tensor> coeff_data;
+    vector<Tensor> aerodata_tensors;
     vector<vector<double>> state_arrays;
 };
