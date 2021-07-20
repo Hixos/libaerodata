@@ -1,0 +1,37 @@
+{
+    "configurations": [
+        {
+            "name": "Win64",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/subprojects/cnpy",
+                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include",
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        },
+        {
+            "name": "Linux64",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/subprojects/cnpy",
+                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include",
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

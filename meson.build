@@ -32,5 +32,6 @@ catch_test_ex = executable('test-catch', test_srcs + srcs,
 
 executable('interpn-csv', ['tests/interpn-csv.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
 executable('test-var', ['tests/test-var.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
+executable('tocsv', ['tests/tocsv.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
 
 test('catch tests', catch_test_ex)
