@@ -15,12 +15,16 @@ incs = include_directories('include')
 cnpy_proj = subproject('cnpy')
 cnpy_dep = cnpy_proj.get_variable('cnpy_dep')
 
+zlib_dep = dependency('zlib', version : '>=1.2', not_found_message: 'Error finding ZLIB dep')
+
 catch_dep = dependency('catch2')
+
+deps = [cnpy_dep, zlib_dep]
 
 install_headers('include/ModelicaAeroData.h')
 
 libaerodata = library('aerodata', srcs, 
-        dependencies : [cnpy_dep], 
+        dependencies : [cnpy_dep, zlib_dep], 
         include_directories: [incs],
         install: true)
 
@@ -28,10 +32,10 @@ libaerodata_dep = declare_dependency(link_with : libaerodata,
   include_directories : incs)
 
 catch_test_ex = executable('test-catch', test_srcs + srcs, 
-        include_directories: incs, dependencies: [catch_dep, cnpy_dep])
+        include_directories: incs, dependencies: [deps, catch_dep])
 
-executable('interpn-csv', ['tests/interpn-csv.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
-executable('test-var', ['tests/test-var.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
-executable('tocsv', ['tests/tocsv.cpp'] + srcs, include_directories: incs, dependencies: [cnpy_dep])
+executable('interpn-csv', ['tests/interpn-csv.cpp'] + srcs, include_directories: incs, dependencies: deps)
+executable('test-var', ['tests/test-var.cpp'] + srcs, include_directories: incs, dependencies: deps)
+executable('tocsv', ['tests/tocsv.cpp'] + srcs, include_directories: incs, dependencies: deps)
 
 test('catch tests', catch_test_ex)
