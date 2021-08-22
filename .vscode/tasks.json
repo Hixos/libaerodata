@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "build",
+			"label": "meson compile release",
 			"type": "shell",
 			"windows": {
 				"command": "meson compile"
@@ -20,7 +20,7 @@
 			}
 		},
 		{
-			"label": "build debug",
+			"label": "meson compile debeug",
 			"type": "shell",
 			"windows": {
 				"command": "meson compile"
@@ -33,6 +33,27 @@
 			},
 			"problemMatcher": "$gcc",
 			"group": "build"
+		},
+		{
+			"label": "meson install",
+			"type": "shell",
+			"windows": {
+				"command": "meson install"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/build_w64_release"
+			},
+			"problemMatcher": "$gcc"
+		},
+		{
+			"label": "meson compile & install",
+			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"meson compile release",
+				"meson install"
+			],
+			"problemMatcher": []
 		}
 	]
 }

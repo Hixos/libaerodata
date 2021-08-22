@@ -12,9 +12,10 @@
                 "UNICODE",
                 "_UNICODE"
             ],
+            "compilerPath": "C:\\Program Files\\OpenModelica1.17.0-64bit\\tools\\msys\\mingw64\\bin\\clang++.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64"
+            "intelliSenseMode": "clang-x64"
         },
         {
             "name": "Linux64",
