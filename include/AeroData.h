@@ -8,6 +8,10 @@
 
 using std::vector;
 
+/**
+ * @brief Class providing methods for accessing aerodynamic data tensors
+ * 
+ */
 class AeroData
 {
 public:
