@@ -6,9 +6,9 @@ lib_src = files(
 
 incs = include_directories('.')
 
-# zlib_proj = subproject('zlib')
-# zlib_dep = zlib_proj.get_variable('zlib_dep')
-zlib_dep = dependency('zlib', version : '>=1.2', not_found_message: 'Error finding this dep')
+zlib_proj = subproject('zlib')
+zlib_dep = zlib_proj.get_variable('zlib_dep')
+# zlib_dep = dependency('zlib', version : '>=1.2', not_found_message: 'Error finding this dep')
 
 cnpy = library(
     'cnpy',

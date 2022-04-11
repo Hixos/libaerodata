@@ -1,5 +1,5 @@
-Remove-Item 'build_w64_release' -Recurse -ErrorAction SilentlyContinue
-Remove-Item 'build_w64_debug' -Recurse -ErrorAction SilentlyContinue
+Remove-Item 'build_release' -Recurse -ErrorAction SilentlyContinue
+Remove-Item 'build_debug' -Recurse -ErrorAction SilentlyContinue
 
 # Where to install the libraries
 $MODELICA_RES_PATH = "C:\Users\Hixos\Documents\TesiCode\modelica\RocketControl\RocketControl\Resources\"

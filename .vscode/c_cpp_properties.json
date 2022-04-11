@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/subprojects/cnpy",
-                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include",
+                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include"
             ],
             "defines": [
                 "_DEBUG",
@@ -22,7 +22,7 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/subprojects/cnpy",
-                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include",
+                "${workspaceFolder}/subprojects/Catch2-2.13.3/single_include"
             ],
             "defines": [
                 "_DEBUG",

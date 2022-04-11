@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <cmath>
 #include <cstddef>
 #include <limits>
 #include <type_traits>
@@ -172,7 +173,6 @@ inline vector<T> multiInterpN(const vector<Tensor>& v,
     }
 
     size_t vals_size = 1 << rank;  // 2 ^ rank
-    // vector<T> vals(vals_size, 0);
     vector<vector<T>> vals(v.size(), vector<T>(vals_size, 0));
 
     vector<size_t> indices(rank, 0);
@@ -197,8 +197,8 @@ inline vector<T> multiInterpN(const vector<Tensor>& v,
         {
             continue;
         }
-        
-        assert(base_indices[i] + 1< x[i].size());
+
+        assert(base_indices[i] + 1 < x[i].size());
 
         size_t half_step = 1 << i;
 

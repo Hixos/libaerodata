@@ -15,7 +15,10 @@ incs = include_directories('include')
 cnpy_proj = subproject('cnpy')
 cnpy_dep = cnpy_proj.get_variable('cnpy_dep')
 
-zlib_dep = dependency('zlib', version : '>=1.2', not_found_message: 'Error finding ZLIB dep')
+# zlib_dep = dependency('zlib', version : '>=1.2', not_found_message: 'Error finding ZLIB dep')
+
+zlib_proj = subproject('zlib')
+zlib_dep = cnpy_proj.get_variable('zlib_dep')
 
 catch_dep = dependency('catch2')
 
@@ -37,5 +40,6 @@ catch_test_ex = executable('test-catch', test_srcs + srcs,
 executable('interpn-csv', ['tests/interpn-csv.cpp'] + srcs, include_directories: incs, dependencies: deps)
 executable('test-var', ['tests/test-var.cpp'] + srcs, include_directories: incs, dependencies: deps)
 executable('tocsv', ['tests/tocsv.cpp'] + srcs, include_directories: incs, dependencies: deps)
+executable('mode-benchmark', ['tests/benchmark.cpp'] + srcs, include_directories: incs, dependencies: deps)
 
 test('catch tests', catch_test_ex)
